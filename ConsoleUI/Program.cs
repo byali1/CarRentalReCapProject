@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Business.Concrete;
+using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 
@@ -10,49 +11,58 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManager carManager = new CarManager(new InMemoryCarDal());
+            CarManager carManager = new CarManager(new EfCarDal());
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
 
-            Console.WriteLine("--All Cars in DB--");
+            //GetAllColors(colorManager);
+            //GetAllCars(carManager);
+            //GetAllBrands(brandManager);
 
-            GetAll(carManager);
-
-            Console.WriteLine("\n--Updated Volvo and added BMW--");
-
-            Car newCar = new Car
+            //GetCarsByBrandId
+            foreach (var car in carManager.GetCarsByBrandId(2))
             {
+                Console.WriteLine("{0} --- {1}",car.Description,car.BrandId);
+            }
 
-                Id = 1,
-                BrandId = 6,
-                ColorId = 4,
-                Description = "Volvo yeni",
-                DailyPrice = 4000,
-                ModelYear = 2022
-            };
-
-            Car newCar2 = new Car
+            //GetCarsByColorId
+            foreach (var car in carManager.GetCarsByColorId(2))
             {
+                Console.WriteLine("{0} --- {1}", car.Description, car.ColorId);
+            }
 
-                Id =5,
-                BrandId = 2,
-                ColorId = 2,
-                Description = "BMW",
-                DailyPrice = 3000,
-                ModelYear = 2020
-            };
+            carManager.Add(new Car
+            {
+                Id = 3,
+                BrandId = 3,
+                Description = "Bmw 2008 model",
+                ColorId = 1,
+                DailyPrice = 1000,
+                ModelYear = 2008
+            });
 
-            carManager.Update(newCar);
-            carManager.Add(newCar2);
 
 
-            GetAll(carManager);
 
-            Console.WriteLine("\n--Deleted Bmw--");
-
-            carManager.Delete(newCar2);
-            GetAll(carManager);
         }
 
-        private static void GetAll(CarManager carManager)
+        private static void GetAllBrands(BrandManager brandManager)
+        {
+            foreach (var brand in brandManager.GetAll())
+            {
+                Console.WriteLine(brand.Name);
+            }
+        }
+
+        private static void GetAllColors(ColorManager colorManager)
+        {
+            foreach (var color in colorManager.GetAll())
+            {
+                Console.WriteLine(color.Name);
+            }
+        }
+
+        private static void GetAllCars(CarManager carManager)
         {
             foreach (var car in carManager.GetAll())
             {

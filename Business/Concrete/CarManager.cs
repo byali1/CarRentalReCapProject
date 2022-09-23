@@ -7,7 +7,7 @@ using Entities.Concrete;
 
 namespace Business.Concrete
 {
-    public class CarManager :ICarService
+    public class CarManager : ICarService
     {
         private ICarDal _carDal;
 
@@ -22,24 +22,26 @@ namespace Business.Concrete
             return _carDal.GetAll();
         }
 
-        public List<Car> GetById(int carId)
+        public List<Car> GetCarsByBrandId(int brandId)
         {
-            return _carDal.GetById(carId);
+            return _carDal.GetAll(c => c.BrandId == brandId);
+        }
+
+        public List<Car> GetCarsByColorId(int colorId)
+        {
+            return _carDal.GetAll(c => c.ColorId == colorId);
         }
 
         public void Add(Car car)
         {
-            _carDal.Add(car);
-        }
-
-        public void Update(Car car)
-        {
-            _carDal.Update(car);
-        }
-
-        public void Delete(Car car)
-        {
-            _carDal.Delete(car);
+            if (car.Description.Length > 2 && car.DailyPrice > 0)
+            {
+                _carDal.Add(car);
+            }
+            else
+            {
+                Console.WriteLine("Araba ismi minimum 2 karakter, günlük fiyatı ise 0'dan büyük olmalıdır");
+            }
         }
     }
 }
