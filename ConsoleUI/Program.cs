@@ -4,6 +4,7 @@ using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace ConsoleUI
 {
@@ -11,46 +12,70 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManager carManager = new CarManager(new EfCarDal());
-            //ColorManager colorManager = new ColorManager(new EfColorDal());
-            //BrandManager brandManager = new BrandManager(new EfBrandDal());
+
+
+
 
             //GetAllColors(colorManager);
             //GetAllCars(carManager);
-            //GetAllBrands(brandManager);
+            //GetAllBrands();
 
-            foreach (var car in carManager.GetCarDetails())
-            {
-                Console.WriteLine("{0} -- {1} -- {2} -- {3}", car.CarName,car.BrandName,car.ColorName,car.DailyPrice);
-            }
-           
-
-           
+            GetCarDetails();
 
 
 
 
         }
 
-        private static void GetAllBrands(BrandManager brandManager)
+        private static void GetCarDetails()
         {
-            foreach (var brand in brandManager.GetAll())
+            CarManager carManager = new CarManager(new EfCarDal());
+            var result = carManager.GetCarDetails();
+            if (result.Success)
             {
-                Console.WriteLine(brand.Name);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.CarName);
+                }
+                
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
         }
 
-        private static void GetAllColors(ColorManager colorManager)
+        private static void GetAllBrands()
         {
-            foreach (var color in colorManager.GetAll())
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            var result = brandManager.GetAll();
+
+            if (result.Success)
+            {
+                foreach (var brand in result.Data)
+                {
+                    Console.WriteLine(brand.Name);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+        }
+
+        private static void GetAllColors()
+        {
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+            foreach (var color in colorManager.GetAll().Data)
             {
                 Console.WriteLine(color.Name);
             }
         }
 
-        private static void GetAllCars(CarManager carManager)
+        private static void GetAllCars()
         {
-            foreach (var car in carManager.GetAll())
+            CarManager carManager = new CarManager(new EfCarDal());
+            foreach (var car in carManager.GetAll().Data)
             {
                 Console.WriteLine(car.Description);
             }
