@@ -21,9 +21,10 @@ namespace Business.Concrete
 
         public IDataResult<List<Brand>> GetAll()
         {
-            if (DateTime.Now.Hour == 12)
+            if (DateTime.Now.Hour == 20)
             {
-                return new ErrorDataResult<List<Brand>>(Messages.MaintenanceTime);
+               return new ErrorDataResult<List<Brand>>(Messages.MaintenanceTime);
+
             }
 
             return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.BrandsListed);

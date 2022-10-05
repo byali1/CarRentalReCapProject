@@ -7,7 +7,7 @@ namespace Business.Constants
     //Refactor edilecek
     public static class Messages
     {
-        public static string MaintenanceTime = "Sistem bakımda.";
+        public static string MaintenanceTime = "Sistem bakımda";
 
         public static string BrandAdded = "Marka eklendi.";
         public static string BrandsListed = "Markalar listelendi.";

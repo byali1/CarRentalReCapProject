@@ -13,16 +13,11 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
 
-
-
-
             //GetAllColors(colorManager);
             //GetAllCars(carManager);
-            //GetAllBrands();
+            GetAllBrands();
 
-            GetCarDetails();
-
-
+            //GetCarDetails();
 
 
         }
