@@ -15,9 +15,14 @@ namespace ConsoleUI
 
             //GetAllColors(colorManager);
             //GetAllCars(carManager);
-            GetAllBrands();
+            //GetAllBrands();
 
             //GetCarDetails();
+
+            
+            
+
+            
 
 
         }
@@ -32,7 +37,7 @@ namespace ConsoleUI
                 {
                     Console.WriteLine(car.CarName);
                 }
-                
+
             }
             else
             {
