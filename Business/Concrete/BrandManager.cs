@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Business.DependencyResolvers.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using FluentValidation;
 
 namespace Business.Concrete
 {
@@ -23,7 +27,7 @@ namespace Business.Concrete
         {
             if (DateTime.Now.Hour == 22)
             {
-               return new ErrorDataResult<List<Brand>>(Messages.MaintenanceTime);
+                return new ErrorDataResult<List<Brand>>(Messages.MaintenanceTime);
 
             }
 
@@ -36,13 +40,9 @@ namespace Business.Concrete
             return new SuccessDataResult<Brand>(_brandDal.Get(b => b.Id == brandId));
         }
 
+        [ValidationAspect(typeof(BrandValidator))]
         public IResult Add(Brand brand)
         {
-            if (brand.Name.Length < 2)
-            {
-                return new ErrorResult(Messages.BrandNameInvalid);
-            }
-
             _brandDal.Add(brand);
             return new SuccessResult(Messages.BrandAdded);
         }
