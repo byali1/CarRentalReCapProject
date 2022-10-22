@@ -16,6 +16,7 @@ namespace Business.DependencyResolvers.ValidationRules.FluentValidation
             RuleFor(c => c.ColorId).NotEmpty().NotNull();
 
             RuleFor(c => c.ModelYear).NotEmpty().NotNull();
+            RuleFor(c => c.ModelYear).GreaterThan(1886);
 
             RuleFor(c => c.DailyPrice).NotEmpty().NotNull();
             RuleFor(c => c.DailyPrice).GreaterThan(0);
