@@ -13,7 +13,7 @@ namespace Core.Utilities.Helpers.FileHelper
         {
             //Upload
 
-            if (file.Length > 0) //Dosya uzunluğunu byte olarak alır.0'dan büyükse resim alınmıştır.
+            if (file!=null) //Dosya uzunluğunu byte olarak alır.0'dan büyükse resim alınmıştır.
             {
                 if (!Directory.Exists(root))
                 {

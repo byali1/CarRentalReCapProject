@@ -64,7 +64,6 @@ namespace Business.Concrete
             {
                 return new ErrorDataResult<List<CarImage>>(GetDefaultImage(carId).Data);
             }
-
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId));
         }
 
@@ -105,7 +104,7 @@ namespace Business.Concrete
             {
                 return new SuccessResult();
             }
-            return new ErrorResult(Messages.NoInfo);
+            return new ErrorResult();
         }
     }
 }
