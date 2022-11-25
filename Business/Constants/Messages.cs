@@ -49,6 +49,15 @@ namespace Business.Constants
         public static string FailedRentalDelete = "Teslim edilmemiş araç için kayıt silinemez.";
 
 
+        //CarImage
+        public static string CarImageLimitError = "Bir arabanın en fazla 5 resmi olabilir.";
+        public static string NoInfo = "Böyle bir araç bilgisine ulaşılamadı.";
+
+        public static string ImageUploaded = "Resim başarıyla yüklendi.";
+        public static string ImageDeleted = "Resim başarıyla silindi.";
+        public static string ImageUpdated = "Resim başarıyla güncellendi.";
+        public static string NoImage = "Resim bulunamadı.";
+
 
 
 
