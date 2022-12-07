@@ -13,7 +13,7 @@ namespace Core.Utilities.Helpers.FileHelper
         {
             //Upload
 
-            if (file!=null) //Dosya uzunluğunu byte olarak alır.0'dan büyükse resim alınmıştır.
+            if (file!=null)
             {
                 if (!Directory.Exists(root))
                 {
@@ -24,8 +24,8 @@ namespace Core.Utilities.Helpers.FileHelper
                 string extension = Path.GetExtension(file.FileName); //Seçilen dosyanın uzantısını elde edilir.
                 string guid = GuidHelper.GuidHelper.CreateGuid();
                 string filePath = guid + extension; //Dosyanın adı ve uzantısı birleştirilir.
-
-                using (FileStream fileStream = File.Create(root + filePath)) //root: Oluşturulacak dosyanın adı , filePath: Dosyanın adı
+               
+                using (FileStream fileStream = File.Create(root + filePath)) //root: Oluşturulacak dosyanın konumu , filePath: Dosyanın adı
                 {
                     file.CopyTo(fileStream); //Dosya nereye kopyalanacak ? 
                     fileStream.Flush(); //Arabellekten siler.

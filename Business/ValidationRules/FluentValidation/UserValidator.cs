@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Core.Entities.Concrete;
 using Entities.Concrete;
 using FluentValidation;
 
@@ -20,8 +21,8 @@ namespace Business.DependencyResolvers.ValidationRules.FluentValidation
             RuleFor(u => u.Email).NotEmpty().NotNull();
             RuleFor(u => u.Email).EmailAddress();
 
-            RuleFor(u => u.Password).NotEmpty().NotNull();
-            RuleFor(u => u.Password).MinimumLength(8);
+            //RuleFor(u => u.Password).NotEmpty().NotNull();
+            //RuleFor(u => u.Password).MinimumLength(8);
 
 
 

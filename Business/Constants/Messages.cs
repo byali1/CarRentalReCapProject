@@ -58,6 +58,16 @@ namespace Business.Constants
         public static string ImageUpdated = "Resim başarıyla güncellendi.";
         public static string NoImage = "Resim bulunamadı.";
 
+        //JWT
+        public static string AuthorizationDenied = "Bu sayfaya erişim izniniz yok.";
+
+        public static string UserRegistered = "Kayıt başarılı.";
+        public static string UserNotFound = "Kullanıcı bulunamadı.";
+        public static string PasswordError = "Şifre yanlış.";
+        public static string SuccessfulLogin = "Giriş başarılı.";
+        public static string UserAlreadyExists = "Böyle bir kullanıcı zaten var.";
+        public static string AccessTokenCreated = "Token oluşturuldu.";
+
 
 
 
