@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Core.Utilities.Business;
 using Core.Utilities.Helpers.FileHelper;
@@ -23,6 +24,7 @@ namespace Business.Concrete
             _fileHelper = fileHelper;
         }
 
+        [SecuredOperation("admin,moderator")]
         public IResult Add(IFormFile file, CarImage carImage)
         {
             IResult result = BusinessRules.Run(CheckIfCarImageLimit(carImage.CarId));
@@ -37,6 +39,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ImageUploaded);
         }
 
+        [SecuredOperation("admin,moderator")]
         public IResult Delete(CarImage carImage)
         {
             _fileHelper.Delete(PathConstants.CarImagesPath + carImage.ImagePath);
@@ -44,6 +47,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ImageDeleted);
         }
 
+        [SecuredOperation("admin,moderator")]
         public IResult Update(IFormFile file, CarImage carImage)
         {
             carImage.ImagePath = _fileHelper.Update(file, PathConstants.CarImagesPath + carImage.ImagePath,

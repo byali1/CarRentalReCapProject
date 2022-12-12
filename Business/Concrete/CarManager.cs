@@ -22,7 +22,7 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-
+        //[SecuredOperation("car.list,admin")]
         public IDataResult<List<Car>> GetAll()
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll());
@@ -68,12 +68,14 @@ namespace Business.Concrete
 
         }
 
+        [SecuredOperation("admin,moderator")]
         public IResult Update(Car car)
         {
             _carDal.Update(car);
             return new SuccessResult(Messages.CarUpdated);
         }
 
+        [SecuredOperation("admin")]
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);

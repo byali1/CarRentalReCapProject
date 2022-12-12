@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.DependencyResolvers.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -31,6 +32,7 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(_userDal.Get(u => u.Id == userId));
         }
 
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User user)
         {
@@ -38,12 +40,14 @@ namespace Business.Concrete
             return new SuccessResult(Messages.UserAdded);
         }
 
+        [SecuredOperation("admin")]
         public IResult Update(User user)
         {
             _userDal.Update(user);
             return new SuccessResult(Messages.UserUpdated);
         }
 
+        [SecuredOperation("admin")]
         public IResult Delete(User user)
         {
             _userDal.Delete(user);
