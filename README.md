@@ -7,5 +7,5 @@ This project includes
 - Fluent Validation
 - Cross Cutting Concerns (Cache,Transaction,Performance,Authorization,Security,Validation) 
 
-and will be updated..
+and more... (will be updated over time)
 
