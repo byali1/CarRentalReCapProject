@@ -1,7 +1,7 @@
 # ReCapProject
 kodlama.io (Car Rental Project)
 
-This project includes 
+Highlights of this project
 - SOLID principles
 - Aspect Oriented Programming
 - Fluent Validation
