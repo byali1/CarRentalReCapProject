@@ -2,70 +2,110 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Core.Utilities.Helpers.FileHelper;
+using Core.Utilities.Results;
 using Microsoft.AspNetCore.Http;
 
-
-namespace Core.Utilities.Helpers.FileHelper
+namespace Core.Utilities.Helpers
 {
     public class FileHelperManager : IFileHelper
     {
-        public string Add(IFormFile file, string root)
+        private static string _currentDirectory = Environment.CurrentDirectory + "\\wwwroot";
+        private static string _folderName = "\\Uploads\\Images\\CarImages\\";
+
+        public IResult Upload(IFormFile file)
         {
-            //Upload
-
-            if (file!=null)
+            var fileExists = CheckFileExists(file);
+            if (!fileExists.Success)
             {
-                if (!Directory.Exists(root))
-                {
-                    //Path yoksa yarat
-                    Directory.CreateDirectory(root);
-                }
+                return new ErrorResult(fileExists.Message);
+            }
+            var type = Path.GetExtension(file.FileName);
+            var typeValid = CheckFileTypeValid(type);
+            var randomName = Guid.NewGuid().ToString();
 
-                string extension = Path.GetExtension(file.FileName); //Seçilen dosyanın uzantısını elde edilir.
-                string guid = GuidHelper.GuidHelper.CreateGuid();
-                string filePath = guid + extension; //Dosyanın adı ve uzantısı birleştirilir.
-               
-                using (FileStream fileStream = File.Create(root + filePath)) //root: Oluşturulacak dosyanın konumu , filePath: Dosyanın adı
-                {
-                    file.CopyTo(fileStream); //Dosya nereye kopyalanacak ? 
-                    fileStream.Flush(); //Arabellekten siler.
-                    return filePath; //Dosyanun tam adı geri gönderilir çünkü sql server'a dosya eklenirken adı ile eklenmesi için.
-                }
+            if (!typeValid.Success)
+            {
+                return new ErrorResult(typeValid.Message);
             }
 
-            return null;
-
+            CheckDirectoryExists(_currentDirectory + _folderName);
+            CreateFile(_currentDirectory + _folderName + randomName + type, file);
+            return new SuccessResult((_folderName + randomName + type).Replace("\\", "/"));
         }
 
-        public void Delete(string filePath) //filePath, resmin direkt olarak adresidir.
+        public IResult Update(IFormFile file, string imagePath)
         {
-            if (File.Exists(filePath))
+            var fileExists = CheckFileExists(file);
+            if (!fileExists.Success)
             {
-                File.Delete(filePath);
+                return new ErrorResult(fileExists.Message);
             }
-            else
-            {
-                //Hata yakalama güncellenecek
-                Console.WriteLine("Dosya bulunamadığından silme işlemi yapılamadı.");
-            }
-            
 
+            var type = Path.GetExtension(file.FileName);
+            var typeValid = CheckFileTypeValid(type);
+            var randomName = Guid.NewGuid().ToString();
+
+            if (!typeValid.Success)
+            {
+                return new ErrorResult(typeValid.Message);
+            }
+
+            DeleteOldFile((_currentDirectory + imagePath).Replace("/", "\\"));
+            CheckDirectoryExists(_currentDirectory + _folderName);
+            CreateFile(_currentDirectory + _folderName + randomName + type, file);
+            return new SuccessResult((_folderName + randomName + type).Replace("\\", "/"));
         }
 
-        public string Update(IFormFile file, string filePath, string root)
+        public IResult Delete(string path)
         {
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-
-            return Add(file, root);
+            DeleteOldFile((_currentDirectory + path).Replace("/", "\\"));
+            return new SuccessResult();
         }
+
+        public void DeleteOldFile(string directory)
+        {
+            if (File.Exists(directory.Replace("/", "\\")))
+            {
+                File.Delete(directory.Replace("/", "\\"));
+            }
+        }
+
+        public void CreateFile(string directory, IFormFile file)
+        {
+            using (FileStream fs = File.Create(directory))
+            {
+                file.CopyTo(fs);
+                fs.Flush();
+            }
+        }
+
+        public void CheckDirectoryExists(string directory)
+        {
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+        }
+
+        public IResult CheckFileTypeValid(string type)
+        {
+            if (type != ".jpeg" && type != ".png" && type != ".jpg")
+            {
+                return new ErrorResult("Wrong file type.");
+            }
+            return new SuccessResult();
+        }
+
+        public IResult CheckFileExists(IFormFile file)
+        {
+            if (file != null && file.Length > 0)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult("No File.");
+        }
+
+
     }
 }
-
-/*
-   IFormFile projemize bir dosya yüklemek için kulanılan yöntemdir, HttpRequest ile gönderilen bir dosyayı temsil eder.
-   FileStream, Stream ana soyut sınıfı kullanılarak genişletilmiş, belirtilen kaynak dosyalar 
-üzerinde okuma/yazma/atlama gibi operasyonları yapmamıza yardımcı olan bir sınıftır
-*/

@@ -77,7 +77,7 @@ namespace WebAPI
             }
 
             //CORS
-            app.UseCors(builder => builder.WithOrigins("http://localhost:3000").AllowAnyHeader()); //Buradan gelen talebe izin ver
+            app.UseCors(builder => builder.WithOrigins("http://localhost:3000", "http://localhost:4200").AllowAnyHeader()); //Buradan gelen talebe izin ver
 
             app.UseHttpsRedirection();
 
@@ -85,7 +85,7 @@ namespace WebAPI
 
             app.UseRouting();
 
-            app.UseAuthentication();//girmek için key (kimlik doðrulama)
+            app.UseAuthentication();//girmek i?in key (kimlik do?rulama)
             app.UseAuthorization(); //girdikten sonra ne yapabiliriz (yetki)
 
             app.UseEndpoints(endpoints =>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using Core.Utilities.Results;
 using Entities.Concrete;
@@ -9,13 +10,12 @@ namespace Business.Abstract
 {
     public interface ICarImageService
     {
-        IResult Add(IFormFile file, CarImage carImage);
-        IResult Delete(CarImage carImage);
-        IResult Update(IFormFile file, CarImage carImage);
-
         IDataResult<List<CarImage>> GetAll();
-        IDataResult<List<CarImage>> GetByCarId(int carId);
-        IDataResult<CarImage> GetByImageId(int imageId);
+        IDataResult<CarImage> Get(Expression<Func<CarImage, bool>> filter);
+        IDataResult<CarImage> GetById(int entityId);
+        IResult Insert(IFormFile file, CarImage entity);
+        IResult Update(IFormFile file, CarImage entity);
+        IResult Delete(CarImage entity);
 
 
     }

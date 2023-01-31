@@ -8,6 +8,9 @@ namespace Business.Constants
     public static class Messages
     {
         public static string MaintenanceTime = "Sistem bakımda";
+        public static string NotAdded = "[HATA]Resim eklenemedi";
+        public static string Listed = "[BAŞARILI]Listelendi.";
+
 
         public static string BrandAdded = "Marka eklendi.";
         public static string BrandsListed = "Markalar listelendi.";
@@ -50,13 +53,13 @@ namespace Business.Constants
 
 
         //CarImage
-        public static string CarImageLimitError = "Bir arabanın en fazla 5 resmi olabilir.";
-        public static string NoInfo = "Böyle bir araç bilgisine ulaşılamadı.";
+        public static string CarImagesLimitExceeded = "Bir arabanın en fazla 5 resmi olabilir.";
+        public static string CarNotExisted = "Böyle bir araç bilgisine ulaşılamadı.";
 
         public static string ImageUploaded = "Resim başarıyla yüklendi.";
         public static string ImageDeleted = "Resim başarıyla silindi.";
         public static string ImageUpdated = "Resim başarıyla güncellendi.";
-        public static string NoImage = "Resim bulunamadı.";
+        public static string SuccessfullyRetrieved = "Başarıyla getirildi";
 
         //JWT
         public static string AuthorizationDenied = "Bu sayfaya erişim izniniz yok.";
