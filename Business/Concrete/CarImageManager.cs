@@ -19,13 +19,14 @@ using Core.Utilities.Business;
 using Core.Utilities.Helpers;
 using Core.Utilities.Helpers.FileHelper;
 using Microsoft.AspNetCore.Http;
+using DataAccess.Concrete.EntityFramework;
 
 namespace Business.Concrete
 {
     public class CarImageManager : ICarImageService
     {
         private const string DefaultCarImagePath = "/Uploads/Images/defaultImage.jpg";
-        private const int ServerMaintenanceHour = 0;
+        //private const int ServerMaintenanceHour = 0;
         private ICarImageDal _carImagesDal;
         private IFileHelper _fileHelper;
 
@@ -37,10 +38,10 @@ namespace Business.Concrete
 
         public IDataResult<List<CarImage>> GetAll()
         {
-            if (DateTime.Now.Hour == ServerMaintenanceHour)
-            {
-                return new ErrorDataResult<List<CarImage>>(Messages.MaintenanceTime);
-            }
+            //if (DateTime.Now.Hour == ServerMaintenanceHour)
+            //{
+            //    return new ErrorDataResult<List<CarImage>>(Messages.MaintenanceTime);
+            //}
 
             return new SuccessDataResult<List<CarImage>>(_carImagesDal.GetAll());
         }
@@ -54,6 +55,13 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<CarImage>(_carImagesDal.Get(x => x.Id == carImageId));
         }
+
+        public IDataResult<List<CarImage>> GetByCarId(int carId)
+        {
+
+            return new SuccessDataResult<List<CarImage>>(_carImagesDal.GetAll(c => c.CarId == carId));
+        }
+
 
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Insert(IFormFile file, CarImage carImages)

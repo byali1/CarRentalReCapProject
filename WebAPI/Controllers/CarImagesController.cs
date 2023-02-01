@@ -14,7 +14,7 @@ namespace WebAPI.Controllers
     public class CarImagesController : ControllerBase
     {
         private static string _currentDirectory = Environment.CurrentDirectory + "\\wwwroot";
-        private static string _folderName = "\\Uploads\\Images\\a.png";
+        private static string _folderName = "\\Uploads\\Images\\defaultImage.jpg";
         private string _defaultPath = _currentDirectory + _folderName;
         private ICarImageService _carImagesService;
         public CarImagesController(ICarImageService serviceBase)
@@ -32,6 +32,17 @@ namespace WebAPI.Controllers
         public IActionResult GetById(int id)
         {
             return GetResponseByResult(_carImagesService.GetById(id));
+        }
+
+        [HttpGet("getbycarid")]
+        public IActionResult GetByCarId(int carId)
+        {
+            var result = _carImagesService.GetByCarId(carId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
         }
 
         [HttpPost("add")]

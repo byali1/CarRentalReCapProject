@@ -13,6 +13,7 @@ namespace Business.Abstract
         IDataResult<List<CarImage>> GetAll();
         IDataResult<CarImage> Get(Expression<Func<CarImage, bool>> filter);
         IDataResult<CarImage> GetById(int entityId);
+        IDataResult<List<CarImage>> GetByCarId(int carId);
         IResult Insert(IFormFile file, CarImage entity);
         IResult Update(IFormFile file, CarImage entity);
         IResult Delete(CarImage entity);
